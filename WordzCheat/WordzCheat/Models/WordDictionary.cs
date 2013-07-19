@@ -6,31 +6,19 @@ using System.IO;
 
 namespace WordzCheat.Models
 {
-    public class WordDictionary
+    public abstract class WordDictionary
     {
-        string[] _words;
+
+        protected abstract Dictionary<string, string[]> _wordsByFirstLetter {get;}
+
 
         public WordDictionary(string filePath)
         {
             using (StreamReader reader = new StreamReader(filePath))
             {
-                _words = reader.ReadToEnd().Split('\n');
+                var lines = reader.ReadToEnd();
+                
             }
-        }
-
-        public bool ContainsWord(string inWord)
-        {
-            return _words.Contains(inWord);
-        }
-
-        public bool ContainsPatternInWords(string pattern)
-        {
-            foreach (string word in _words)
-            {
-                if (word.Contains(pattern))
-                    return true;
-            }
-            return false;
         }
     }
 }
