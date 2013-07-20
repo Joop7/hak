@@ -22,11 +22,13 @@ namespace WordzCheat.Models.Dictionaries
         public bool ContainsWordsStartingWithPattern(string inPattern)
         {
             char firstLetter = inPattern[0];
-            foreach (string word in _wordsByFirstLetter[firstLetter])
+
+            if (_wordsByFirstLetter[firstLetter].Any(
+                item => item.StartsWith(inPattern) && !item.Equals(inPattern)))
             {
-                if (word.StartsWith(inPattern) && !word.Equals(inPattern))
-                    return true;
+                return true;
             }
+
             return false;
         }
     }

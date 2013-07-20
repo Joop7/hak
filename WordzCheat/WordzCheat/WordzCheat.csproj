@@ -71,6 +71,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Dictionaries\CroWordDictionary.cs" />
     <Compile Include="Models\Exceptions\NoElementsDefined.cs" />
+    <Compile Include="Models\Exceptions\NoSuchDictionary.cs" />
     <Compile Include="Models\Factories\DictionaryFactory.cs" />
     <Compile Include="Models\Factories\MatrixElementsFactory.cs" />
     <Compile Include="Models\Exceptions\WrongNumberOfElements.cs" />

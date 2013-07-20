@@ -27,9 +27,7 @@ namespace WordzCheat.Models.Matrix
                 foreach (int neighborIndex in element.NeighborIndices)
                 {
                     int[] startingLetterIndices = new int[] { element.Index, neighborIndex };
-                    List<string> newWords = FindWordsRecursive(inDictionary, startingLetterIndices, words);
-                    foreach (string newWord in newWords)
-                        words.Add(newWord);
+                    words = FindWordsRecursive(inDictionary, startingLetterIndices, words);
                 }
             }
             return words;
@@ -40,16 +38,17 @@ namespace WordzCheat.Models.Matrix
         private List<string> FindWordsRecursive(IWordDictionary inDictionary, int[] inLetterIndices, List<string> words)
         {
             string word = GetWord(inLetterIndices);
-            if (inDictionary.ContainsWord(word))
+            if (inDictionary.ContainsWord(word) && !words.Contains(word))
                 words.Add(word);
 
             if (inDictionary.ContainsWordsStartingWithPattern(word))
             {
                 foreach (int letterIndex in elements[inLetterIndices.Last()].NeighborIndices)
                 {
-                    List<string> newWords = FindWordsRecursive(inDictionary, CreateNewArray(inLetterIndices, letterIndex), words);
-                    foreach (string newWord in newWords)
-                        words.Add(newWord);
+                    if (!inLetterIndices.Contains(letterIndex))
+                    {
+                        words = FindWordsRecursive(inDictionary, CreateNewArray(inLetterIndices, letterIndex), words);
+                    }
                 }
             }
 

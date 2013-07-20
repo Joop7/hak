@@ -4,4 +4,8 @@
 
 <h2>Index</h2>
 
-<p>hello</p>
+<ul> 
+   @for (int i=0; i < ViewBag.Size; i++) { 
+      <li>@ViewBag.Words[i]</li> 
+   } 
+</ul>
