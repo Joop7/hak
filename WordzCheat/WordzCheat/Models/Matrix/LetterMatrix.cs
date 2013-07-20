@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using WordzCheat.Models.Dictionaries;
 
 namespace WordzCheat.Models.Matrix
 {
@@ -10,6 +7,6 @@ namespace WordzCheat.Models.Matrix
     {
         protected List<MatrixElement> elements;
 
-        public abstract List<string> FindeWords(IWordDictionary inDictionary);
+        public abstract List<string> FindWords(List<string> inDictionary);
     }
 }

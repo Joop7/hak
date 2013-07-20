@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WordzCheat.Models.Dictionaries;
 using WordzCheat.Models.Exceptions;
 using WordzCheat.Models.Factories;
 
@@ -19,59 +18,82 @@ namespace WordzCheat.Models.Matrix
                 elements = MatrixElementsFactory.GetElements(MATRIX_SIZE, inLetters);
         }
 
-        public override List<string> FindeWords(IWordDictionary inDictionary)
+        public List<string> FindWords(List<string> inDictionary)
         {
             List<string> words = new List<string>();
-            foreach (MatrixElement element in elements)
+
+            foreach (string word in inDictionary)
             {
-                foreach (int neighborIndex in element.NeighborIndices)
-                {
-                    int[] startingLetterIndices = new int[] { element.Index, neighborIndex };
-                    words = FindWordsRecursive(inDictionary, startingLetterIndices, words);
-                }
+                if (IsInMatrix(word))
+                    words.Add(word);
             }
+
             return words;
         }
 
         #region private methods
-
-        private List<string> FindWordsRecursive(IWordDictionary inDictionary, int[] inLetterIndices, List<string> words)
+        
+        private bool IsInMatrix(string word)
         {
-            string word = GetWord(inLetterIndices);
-            if (inDictionary.ContainsWord(word) && !words.Contains(word))
-                words.Add(word);
-
-            if (inDictionary.ContainsWordsStartingWithPattern(word))
+            List<List<int>> possibleIndexSequence = new List<List<int>>();
+            foreach (char letter in word)
             {
-                foreach (int letterIndex in elements[inLetterIndices.Last()].NeighborIndices)
+                List<MatrixElement> possibleElements = elements.FindAll(item => item.Value.Equals(letter.ToString()));
+                if (possibleElements.Count == 0)
+                    return false;
+
+                if (possibleIndexSequence.Count == 0)
                 {
-                    if (!inLetterIndices.Contains(letterIndex))
+                    foreach (MatrixElement element in possibleElements)
                     {
-                        words = FindWordsRecursive(inDictionary, CreateNewArray(inLetterIndices, letterIndex), words);
+                        List<int> newIndexSequence = new List<int>() { element.Index };
+                        possibleIndexSequence.Add(newIndexSequence);
                     }
+                }
+                else
+                {
+                    List<List<int>> newPossibleIndexSequence = new List<List<int>>();
+
+                    foreach (MatrixElement element in possibleElements)
+                    {
+                        foreach (List<int> indexSequence in possibleIndexSequence)
+                        {
+                            if (!indexSequence.Contains(element.Index))
+                            {
+                                List<int> newIndexSequence = indexSequence.ToList();
+                                newIndexSequence.Add(element.Index);
+                                newPossibleIndexSequence.Add(newIndexSequence);
+                            }
+                        }
+                    }
+
+                    if (newPossibleIndexSequence.Count == 0)
+                        return false;
+                    else
+                        possibleIndexSequence = newPossibleIndexSequence;
                 }
             }
 
-            return words;
+            foreach (List<int> indices in possibleIndexSequence)
+            {
+                if (IndexSequenceExists(indices))
+                    return true;
+            }
+
+            return false;
         }
 
-        private string GetWord(int[] inLetterIndices)
+        private bool IndexSequenceExists(List<int> inIndexSequence)
         {
-            string word = "";
-            foreach (int index in inLetterIndices)
-                word += elements[index].Value;
+            List<int> previusElementNeigbors = new List<int>();
+            foreach (int index in inIndexSequence)
+            {
+                if ((previusElementNeigbors.Count != 0) && !previusElementNeigbors.Contains(index))
+                    return false;
 
-            return word;
-        }
-
-        private int[] CreateNewArray(int[] inArray, int inNewElement)
-        {
-            int[] newArray = new int[inArray.Length + 1];
-            
-            inArray.CopyTo(newArray, 0);
-            newArray[inArray.Length] = inNewElement;
-            
-            return newArray;
+                previusElementNeigbors = elements[index].NeighborIndices.ToList();
+            }
+            return true;
         }
 
         #endregion
