@@ -6,9 +6,9 @@ namespace WordzCheat.Models.Dictionaries
 {
     public class CroWordDictionary : IWordDictionary
     {
-        private Dictionary<char, string[]> _wordsByFirstLetter;
+        private Dictionary<char, List<string>> _wordsByFirstLetter;
 
-        public CroWordDictionary(Dictionary<char, string[]> inWordsByFirstLetter)
+        public CroWordDictionary(Dictionary<char, List<string>> inWordsByFirstLetter)
         {
             _wordsByFirstLetter = inWordsByFirstLetter;
         }

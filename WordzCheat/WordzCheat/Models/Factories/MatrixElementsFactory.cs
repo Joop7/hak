@@ -7,12 +7,12 @@ namespace WordzCheat.Models.Factories
 {
     public static class MatrixElementsFactory
     {
-        public static List<MatrixElement> GetElements(int inMatrixSize, string[] inElements)
+        public static List<MatrixElement> GetElements(int inMatrixSize, string[] inElementValues)
         {
             switch (inMatrixSize) 
             {
                 case 4:
-                    int[][] neighborIndicesLists = new int[][]
+                    int[][] listsOfNeighborIndices = new int[][]
                     {
                         new int[]{2,5,6},
                         new int[]{1,3,5,6,7},
@@ -34,7 +34,7 @@ namespace WordzCheat.Models.Factories
                     
                     List<MatrixElement> elements = new List<MatrixElement>();
                     for(int elementIndex = 1; elementIndex <= inMatrixSize*inMatrixSize; elementIndex++)
-                        elements.Add(new MatrixElement(inElements[elementIndex - 1], elementIndex, neighborIndicesLists[elementIndex - 1]));
+                        elements.Add(new MatrixElement(inElementValues[elementIndex - 1], elementIndex, listsOfNeighborIndices[elementIndex - 1]));
 
                     return elements;
                 
