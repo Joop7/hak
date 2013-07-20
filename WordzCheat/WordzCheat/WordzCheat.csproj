@@ -64,13 +64,19 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WordzCheatController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\CroDictionary.cs" />
-    <Compile Include="Models\MatrixElement.cs" />
-    <Compile Include="Models\WordDictionary.cs" />
+    <Compile Include="Models\Dictionaries\CroWordDictionary.cs" />
+    <Compile Include="Models\Exceptions\NoElementsDefined.cs" />
+    <Compile Include="Models\Factories\MatrixElementsFactory.cs" />
+    <Compile Include="Models\Exceptions\WrongNumberOfElements.cs" />
+    <Compile Include="Models\Matrix\LetterMatrix.cs" />
+    <Compile Include="Models\Matrix\MatrixElement.cs" />
+    <Compile Include="Models\Dictionaries\IWordDictionary.cs" />
+    <Compile Include="Models\Matrix\WordzLetterMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
