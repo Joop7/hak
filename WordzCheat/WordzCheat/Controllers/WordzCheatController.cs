@@ -17,7 +17,7 @@ namespace WordzCheat.Controllers
 
         public ActionResult Index()
         {
-            string[] letters = "đ l a r i k s m v e a n ž c p t".Split(' ').Select(item => item.ToUpper()).ToArray();
+            string[] letters = "t i i l t i u ž o s a p o n d s".Split(' ').Select(item => item.ToUpper()).ToArray();
             string[] delimiter = new string[] { "\r\n" };
             List<string> dict = Resources.HRdict.Split(delimiter, StringSplitOptions.RemoveEmptyEntries).ToList();;
             TestMatrix matrix = new TestMatrix(letters);

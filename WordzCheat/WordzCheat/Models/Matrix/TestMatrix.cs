@@ -42,21 +42,36 @@ namespace WordzCheat.Models.Matrix
                 if (possibleElements.Count == 0)
                     return false;
 
-                foreach (MatrixElement element in possibleElements)
+                if (possibleIndexSequence.Count == 0)
                 {
-                    if (possibleIndexSequence.Count == 0)
+                    foreach (MatrixElement element in possibleElements)
                     {
                         List<int> newIndexSequence = new List<int>();
                         newIndexSequence.Add(element.Index);
                         possibleIndexSequence.Add(newIndexSequence);
                     }
-                    else
+                }
+                else
+                {
+                    List<List<int>> newPossibleIndexSequence = new List<List<int>>();
+
+                    foreach (MatrixElement element in possibleElements)
                     {
-                        for (int i = 0; i < possibleIndexSequence.Count; i++)
+                        foreach (List<int> indexSequence in possibleIndexSequence)
                         {
-                            possibleIndexSequence[i].Add(element.Index);
+                            if (!indexSequence.Contains(element.Index))
+                            {
+                                List<int> newIndexSequence = indexSequence.ToList();
+                                newIndexSequence.Add(element.Index);
+                                newPossibleIndexSequence.Add(newIndexSequence);
+                            }
                         }
                     }
+
+                    if (newPossibleIndexSequence.Count == 0)
+                        return false;
+                    else
+                        possibleIndexSequence = newPossibleIndexSequence;
                 }
             }
 
