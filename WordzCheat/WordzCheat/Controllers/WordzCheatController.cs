@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using WordzCheat.Models.Factories;
 using WordzCheat.Models.Dictionaries;
 using WordzCheat.Models.Matrix;
+using WordzCheat.Properties;
 
 namespace WordzCheat.Controllers
 {
@@ -17,9 +18,10 @@ namespace WordzCheat.Controllers
         public ActionResult Index()
         {
             string[] letters = "đ l a r i k s m v e a n ž c p t".Split(' ').Select(item => item.ToUpper()).ToArray();
-            LetterMatrix matrix = new WordzLetterMatrix(letters);
-            IWordDictionary dict = DictionaryFactory.GetDictionary(Language.HR);
-            List<string> words = matrix.FindeWords(dict);
+            string[] delimiter = new string[] { "\r\n" };
+            List<string> dict = Resources.HRdict.Split(delimiter, StringSplitOptions.RemoveEmptyEntries).ToList();;
+            TestMatrix matrix = new TestMatrix(letters);
+            List<string> words = matrix.FindWords(dict);
             ViewBag.Words = words;
             ViewBag.Size = words.Count;
             return View();

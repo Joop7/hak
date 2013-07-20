@@ -78,6 +78,7 @@
     <Compile Include="Models\Matrix\LetterMatrix.cs" />
     <Compile Include="Models\Matrix\MatrixElement.cs" />
     <Compile Include="Models\Dictionaries\IWordDictionary.cs" />
+    <Compile Include="Models\Matrix\TestMatrix.cs" />
     <Compile Include="Models\Matrix\WordzLetterMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
